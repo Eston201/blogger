@@ -1,0 +1,26 @@
+/**
+  * 212121 (black)
+  * 323232  (ligher black)
+  * 0D7377 (darker black/teal)
+  * 14FFEC (bright teal/blue)
+  *
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body{
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden
+}
+
+body {
+    color: #EEE;
+    background-color: #212121;
+    font-family: 'Roboto', sans-serif;
+}
+#app, .root-template-container {
+    height: 100%;
+}
