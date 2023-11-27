@@ -51,7 +51,7 @@
                     class="button-submit" 
                     type="submit"
                     :loading="form.validating"
-                    :text="buttonText"
+                    :text="formButtonText"
                 >
                 </v-btn>
             </div>
@@ -62,38 +62,48 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useRootStore } from '@/store/root';
+import { useAuthStore } from '@/store/auth';
 import { VForm, VTextField, VBtn, VAlert} from 'vuetify/components'
+import config from '@/utils/config';
+
+const router = useRouter();
+const authStore = useAuthStore();
 
 const props = defineProps({
-    formHeader: {
+    formType: {
         type: String,
-        required: true
-    },
-    buttonText: {
-        type: String,
-        required: true
-    },
-    submitFunction: {
-        type: Function,
-        required: true
-    },
-    formRules: {
-        type: Object,
         required: true
     }
 });
-const router = useRouter();
-const rootStore = useRootStore();
+
+const formHeader = computed(() => (props.formType === 'login') ? 'Login' : 'Sign Up');
+const formButtonText = computed(() => (props.formType === 'login') ? 'Login' : 'Create Account');
+
+// Form Base Rules
+const { loginBaseRules, signupBaseRules } = config;
+// Login rules
+const loginRules = { 
+    username: loginBaseRules.username, 
+    password: loginBaseRules.password
+}
+// Signup rules
+const signupRules = {
+  username: signupBaseRules.username,
+  password: signupBaseRules.password
+}
+const formRules = computed(() => {
+    if (props.formType === 'login') return loginRules;
+    return signupRules;
+})
+
 
 const formAlert = reactive({
     message: '',
     type: 'error',
     visible: false
 })
-
 function setFormAlertValues(message = '', type = 'error', visible = false) {
     formAlert.message = message;
     formAlert.type = type;
@@ -108,7 +118,6 @@ const form = reactive({
     password: '',
     validating: false
 });
-
 async function validateForm(e) {
     form.validating = true;
     const { valid } = await e;
@@ -116,16 +125,19 @@ async function validateForm(e) {
         form.validating = false;
         return
     };
-    const { type, message } = await props.submitFunction(form.username, form.password);
+
+    // Call login/signup from auth store
+    const { type, message } = await authStore[props.formType](form.username, form.password);
+    console.log(type, message);
     setFormAlertValues(message, type, true);
     form.validating = false;
     if (type !== 'error') {
         // Mutate store
-        rootStore.setAuth(true);
+        authStore.setAuth(true);
         // Push to home
         router.push({
             name: 'home'
-        })
+        });
     }
 }
 </script>

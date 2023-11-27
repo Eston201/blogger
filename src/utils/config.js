@@ -1,3 +1,4 @@
+import { validateUniqueUsernameApi } from "@/api/authentication";
 /*
  * Some constants
 */
@@ -36,6 +37,15 @@ const signupUsernameRules = [
     (username) => {
         if (username.length > 3) return true;
         return "Username must be greater than 3 characters long";
+    },
+    async (username) => {
+        const { data: isUnique, error } = await validateUniqueUsernameApi(username);
+        if (error) {
+            console.error(error);
+            return `Could not validate unique username. ${error.code}`
+        }
+        if (isUnique) return true;
+        return "Username already exists, try another!.";
     }
 ];
 const signUpPasswordRules = [

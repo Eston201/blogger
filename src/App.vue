@@ -35,7 +35,7 @@ function routerEnter(el, done) {
   gsap.to(el, {
     y: '0',
     onComplete: done,
-    duration: 0.4
+    duration: 0.45
   })
 }
 function routerLeave(el, done) {
@@ -44,7 +44,7 @@ function routerLeave(el, done) {
       return (curruntRouteTransition.value === 'slide-down') ? '+=100vh' : '-=100vh';
     },
     onComplete: done,
-    duration: 0.4
+    duration: 0.45
   })
 }
 </script>

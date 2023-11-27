@@ -4,9 +4,15 @@
       <base-app-header/>
 
       <div class="button-container">
-        <base-button-link button-text="Log In" :click-handler="() => $router.push({name: 'login'})"/> 
+        <base-button-link 
+          button-text="Log In" 
+          :click-handler="() => goToAuth('login')"
+        /> 
         |
-        <base-button-link button-text="Sign Up" :click-handler="() => $router.push({name: 'signup'})"/>
+        <base-button-link 
+          button-text="Sign Up" 
+          :click-handler="() => goToAuth('signup')"
+        />
       </div>
     </main>
   </div>
@@ -14,10 +20,21 @@
 
 <script setup>
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router';
 import BaseAppHeader from '@/components/UI/BaseAppHeader.vue'
-import BaseButtonLink from '@/components/Auth/BaseButtonLink.vue'
+import BaseButtonLink from '@/components/UI/BaseButtonLink.vue'
 import gsap from 'gsap'
 
+const router = useRouter();
+
+function goToAuth(authType) {
+  router.push({
+    name: 'auth',
+    query: {
+      authType
+    }
+  })
+}
 
 onMounted(() => {
   gsap.from('.button-container', {
