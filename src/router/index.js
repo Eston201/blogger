@@ -37,7 +37,15 @@ const router = createRouter({
 router.beforeEach((to, _from) => {
     const authStore = useAuthStore();
 
-    if (to.meta.requiresAuth && !authStore.authenticated) return '/'
+    if (to.meta.requiresAuth && !authStore.authenticated) {
+        return {
+            path: '/auth',
+            query: {
+                authType: 'login',
+                redirect: to.fullPath
+            }
+        }
+    }
 
     if (authStore.authenticated) {
         if (to.name === 'blogger' || to.name === 'auth') {

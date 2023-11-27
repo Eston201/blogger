@@ -63,11 +63,12 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '@/store/auth';
 import { VForm, VTextField, VBtn, VAlert} from 'vuetify/components'
 import config from '@/utils/config';
 
+const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
 
@@ -134,10 +135,8 @@ async function validateForm(e) {
     if (type !== 'error') {
         // Mutate store
         authStore.setAuth(true);
-        // Push to home
-        router.push({
-            name: 'home'
-        });
+        const path = route.query.redirect || '/home';
+        router.push(path);
     }
 }
 </script>
