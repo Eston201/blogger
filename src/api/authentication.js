@@ -4,7 +4,7 @@ async function loginApi(username, password) {
     try {
         const data = await request(
             "POST",
-            "/blogger/login",
+            "/blogger/user/login",
             { username, password }
         );
         return data;
@@ -17,7 +17,7 @@ async function signupApi(username, password) {
     try {
         const data = await request(
             "POST",
-            "/blogger/signup",
+            "/blogger/user/signup",
             { username, password}
         )
         return data;
@@ -30,7 +30,7 @@ async function validateUniqueUsernameApi(username) {
     try {
         const data = await request(
             "POST",
-            "/blogger/checkUniqueUsername",
+            "/blogger/user/validateUniqueUsername",
             { username }
         );
         return data;
