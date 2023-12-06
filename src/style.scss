@@ -21,6 +21,10 @@ body {
     background-color: #212121;
     font-family: 'Roboto', sans-serif;
 }
-#app, .root-template-container {
+#app {
+    height: 100%;
+    overflow: hidden;
+}
+.root-template-container {
     height: 100%;
 }

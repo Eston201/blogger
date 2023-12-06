@@ -4,8 +4,9 @@ import { useAuthStore } from "@/store/auth";
 /**
  *  Views 
  */ 
-const Blogger = () => import('../views/Blogger/Blogger.vue');
-const Home = () => import('../views/Home/Home.vue');
+const Blogger = () => import('@/views/Blogger/Blogger.vue');
+const Home = () => import('@/views/Home/Home.vue');
+const Profile = () => import('@/views/Profile/Profile.vue')
 const Authentication = () => import('@/views/Authentication/Authentication.vue');
 const NotFound = () => import('@/views/NotFound/NotFound.vue');
 
@@ -16,9 +17,17 @@ const routes = [
         component: Blogger,
     },
     {
-        path: '/home',
+        path: '/blogger/home',
         name: 'home',
         component: Home,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/blogger/profile',
+        name: 'profile',
+        component: Profile,
         meta: {
             requiresAuth: true
         }

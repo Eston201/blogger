@@ -1,5 +1,5 @@
 <template>
-    <button class="base-button-link" @click="clickHandler">{{buttonText}}</button>
+    <button class="base-button-link" :class="{'active-button': active}" @click="clickHandler">{{buttonText}}</button>
 </template>
 
 <script setup>
@@ -16,6 +16,10 @@ const props = defineProps({
     clickHandler: {
         type: Function,
         required: true
+    },
+    active: { // applies active class styling
+        type: Boolean,
+        default: false
     }
 });
 </script>
@@ -29,7 +33,13 @@ const props = defineProps({
 
     &:hover {
         cursor: pointer;
+        transform: scale(0.96);
         color: #14FFEC;
     }
+}
+.active-button {
+    color: #EEE;
+    font-weight: 500;
+    border-bottom: 2px solid #0D7377;
 }
 </style>

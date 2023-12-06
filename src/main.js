@@ -2,8 +2,12 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia';
 import { createVuetify } from 'vuetify'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import gsap from 'gsap';
 import App from './App.vue'
 import router from './router'
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Style Sheets
 import 'vuetify/styles'
