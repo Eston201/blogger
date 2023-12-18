@@ -6,8 +6,11 @@ import { useAuthStore } from "@/store/auth";
  */ 
 const Blogger = () => import('@/views/Blogger/Blogger.vue');
 const Home = () => import('@/views/Home/Home.vue');
-const Profile = () => import('@/views/Profile/Profile.vue')
+const Profile = () => import('@/views/Profile/Profile.vue');
 const Authentication = () => import('@/views/Authentication/Authentication.vue');
+const BlogCreate = () => import('@/views/Blog/Create.vue');
+const BlogView = () => import('@/views/Blog/View.vue');
+const BlogNotFound = () => import('@/views/Blog/NotFound.vue')
 const NotFound = () => import('@/views/NotFound/NotFound.vue');
 
 const routes = [
@@ -21,7 +24,7 @@ const routes = [
         name: 'home',
         component: Home,
         meta: {
-            requiresAuth: true
+            requiresAuth: false
         }
     },
     {
@@ -36,6 +39,38 @@ const routes = [
         path: '/auth',
         name: 'auth',
         component: Authentication,
+    },
+    {
+        path: '/blogger/blog/',
+        children: [
+            {
+                path: 'create',
+                name: 'blog_create',
+                alias: '',
+                component: BlogCreate,
+                meta: {
+                    requiresAuth: true
+                }
+            },
+            {
+                path: 'view/:blog_id',
+                name: 'blog_view',
+                component: BlogView,
+                props: ({ params }) => {
+                    return {
+                        blog_id: Number(params.blog_id)
+                    }
+                },
+                meta: {
+                    requiresAuth: true
+                }
+            },
+            {
+                path: 'notFound',
+                name: 'blog_notFound',
+                component: BlogNotFound
+            }
+        ]
     },
     {
         path: '/:pathMatch(.*)*', 

@@ -62,7 +62,7 @@ const navLinks = ref([
     },
     {
         label: "Create",
-        routeName: "create",
+        routeName: "blog_create",
         iconClass: 'mdi-text-box-edit-outline'
     },
 ]);
