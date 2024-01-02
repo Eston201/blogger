@@ -6,7 +6,7 @@
                     <input 
                         type="text" 
                         class="title-input" 
-                        v-model="form.title"
+                        v-model.trim="form.title"
                         placeholder="Blog Title"
                         autocomplete="false"
                     />
@@ -24,7 +24,7 @@
                             v-model="form.category"
                             label="Category"
                             :items="categoryOptions"
-                            :error="!selectedCategory"
+                            :error="!categorySelected"
                             :error-messages="categoryErrorMsg"
                             clearable
                             variant="outlined"
@@ -48,7 +48,7 @@
 
             <section class="form-content-container">
                 <v-textarea 
-                    v-model="form.content"
+                    v-model.trim="form.content"
                     label="Content" 
                     variant="outlined"
                     counter
@@ -78,11 +78,21 @@
                 {{ formLoaderContent }}
             </div>
         </base-loader>
+        <base-alert 
+            :show-alert="alertProps.showAlert"
+            :alert-type="alertProps.alertType"
+            :alert-title="alertProps.alertTitle"
+            :alert-text="alertProps.alertText"
+            @close-alert="alertProps.showAlert = false"
+        >
+        </base-alert>
     </div>
 </template>
 
 <script setup>
 import BaseLoader from '@/components/UI/BaseLoader.vue'
+import BaseAlert from '../UI/BaseAlert.vue';
+
 import { 
     VIcon,
     VSelect, 
@@ -97,12 +107,13 @@ import {
 } from 'vue';
 
 const loaderVisible = ref(false);
-const formLoaderContent = ref('Validating Form...');
+const formLoaderContent = ref('');
 const form = reactive({
     title: '',
     content: '',
     category: 'General',
-    commentable: true
+    commentable: true,
+    status: 'draft'
 });
 
 // Form Title
@@ -112,8 +123,8 @@ const titleClearVisible = computed(() => {
 });
 
 // Form Category
-const selectedCategory = computed(() => form.category ? true : false);
-const categoryErrorMsg = computed(() => selectedCategory.value ? '' : 'Please select a category');
+const categorySelected = computed(() => form.category ? true : false);
+const categoryErrorMsg = computed(() => categorySelected.value ? '' : 'Please select a category');
 const categoryOptions = [
     'General',
     'Technology',
@@ -125,17 +136,68 @@ const categoryOptions = [
     'Food'
 ];
 
+// Alert
+const alertProps = reactive({
+    showAlert: false,
+    alertTitle: 'Title error',
+    alertText: 'Error',
+    alertType: 'error'
+});
+let alertTimeOut = null;
+function setAlert(showAlert = true, alertTitle = '', alertText = '', alertType = 'success') {
+    alertProps.showAlert = showAlert;
+    alertProps.alertType = alertType;
+    alertProps.alertTitle = alertTitle;
+    alertProps.alertText = alertText;
+
+    // Auto close alert
+    if (alertTimeOut) {
+        clearTimeout(alertTimeOut);
+    }
+    alertTimeOut = setTimeout(() => {
+        alertProps.showAlert = false;
+    }, 3000);
+}
+
+function validateForm(validateContent = false) {
+    formLoaderContent.value = 'Validating Form...';
+    let hasError = true;
+    if (!form.title) {
+        setAlert(true, 'Title', 'Please enter a title', 'error');
+        return hasError;
+    }
+    else if (!form.category) {
+        setAlert(true, 'Category', 'Please select a category', 'error');
+        return hasError;
+    }
+    // Validate Content for publishing
+    if (validateContent) {
+        if (!form.content) {
+            setAlert(true, 'Content', 'Missing blog content', 'error');
+            return hasError;
+        }
+        else {
+            if (form.content.length < 50) {
+                setAlert(true, 'Content', 'Blog content to short, Enter at least 50 characters', 'error');
+                return hasError;
+            }
+        }
+    }
+    return false;
+}
+
 // Submit form functions
 async function saveDraft() {
-    console.log("save draft");
     loaderVisible.value = true;
-    setTimeout(() => {
-        loaderVisible.value = false
-    }, 1000);
+    validateForm();
+    loaderVisible.value = false
 }
-// TODO: Form Validation- only when publishing
+
 async function publish() {
-    console.log("Publish");
+    loaderVisible.value = true;
+    validateForm(true);
+    form.status = 'published'
+    loaderVisible.value = false
 }
 
 </script>
