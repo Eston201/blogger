@@ -1,53 +1,64 @@
 <template>
+
     <div id="nav-container">
-        <div @click="mobileNavVisible = !mobileNavVisible" id="nav-icon">
-            <svg id="app-link-icon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#14FFEC" class="bi bi-body-text" viewBox="0 0 16 16">
+        <!-- Svg from bootstrap icons -->
+        <div id="app-link-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" :fill="appIconFill" class="bi bi-body-text" viewBox="0 0 16 16" @click="navIconClick">
                 <path fill-rule="evenodd" d="M0 .5A.5.5 0 0 1 .5 0h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 0 .5m0 2A.5.5 0 0 1 .5 2h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m9 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-9 2A.5.5 0 0 1 .5 4h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m5 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-12 2A.5.5 0 0 1 .5 6h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m8 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-8 2A.5.5 0 0 1 .5 8h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-7 2a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
             </svg>
         </div>
-        <nav id="base-nav">
-            <div class="nav-item app-item" @click="$router.push({name: 'home'})">
-                <!-- Svg from bootstrap icons -->
-                <svg id="app-link-icon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#14FFEC" class="bi bi-body-text" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M0 .5A.5.5 0 0 1 .5 0h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 0 .5m0 2A.5.5 0 0 1 .5 2h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m9 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-9 2A.5.5 0 0 1 .5 4h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m5 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-12 2A.5.5 0 0 1 .5 6h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m8 0a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-8 2A.5.5 0 0 1 .5 8h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m7 0a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-7 2a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
-                </svg>
-                <div id="app-link">
-                    <div v-for="letter of 'Blogger'" class="letter">
-                        {{ letter }}
+
+        <transition @before-enter="beforeNavEnter" @enter="navEnter" @leave="navLeave">
+            <nav id="base-nav" v-show="isNavVisible">
+                <div class="nav-item app-item" @click="$router.push({name: 'home'})">
+                    <div id="app-link">
+                        <div v-for="letter of 'Blogger'" class="letter">
+                            {{ letter }}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="nav-item" v-for="link of navLinks" :key="link.label">
-                <v-icon :icon="link.iconClass" :class="{ 'active-icon' : (link.routeName === $route.name) }"></v-icon>
-                <base-button-link 
-                    :button-text="link.label" 
-                    :button-text-size="'20px'"
-                    :click-handler="() => $router.push({name: link.routeName})"
-                    :active="link.routeName === $route.name"
-                />
-            </div>
-        </nav>
+    
+                <div class="nav-item" v-for="link of navLinks" :key="link.label">
+                    <v-icon :icon="link.iconClass" :class="{ 'active-icon' : (link.routeName === $route.name) }"></v-icon>
+                    <base-button-link 
+                        :button-text="link.label" 
+                        :button-text-size="'20px'"
+                        :click-handler="() => $router.push({name: link.routeName})"
+                        :active="link.routeName === $route.name"
+                    />
+                </div>
+            </nav>
+        </transition>
     </div>
 </template>
 
 <script setup>
 import BaseButtonLink from './BaseButtonLink.vue';
+import { useResizer } from '@/composables/resizer'
 import { VIcon } from 'vuetify/components';
 import { onMounted, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import $ from 'jquery'
 import gsap from 'gsap';
+import { watch } from 'vue';
 
 const router = useRouter();
+const { isMobile } = useResizer();
 
-const mobileNavVisible = ref(false);
-const displayMobileNav = computed(() => {
-    if (mobileNavVisible.value) return 'block';
-    return 'none';
+// Change nav icon color based on is mobile or not
+const appIconFill = computed(() => {
+    if (isMobile.value) return "#FFF";
+    return "#14FFEC"
 });
-router.beforeEach(() => {
-    mobileNavVisible.value = false
-});
+const isNavVisible = ref(isMobile.value ? false : true);
+
+// For responsiveness 
+watch(
+    () => isMobile.value,
+    (value) => {
+        if (!value) isNavVisible.value = true;
+    }
+)
 
 const navLinks = ref([
     {
@@ -67,18 +78,36 @@ const navLinks = ref([
     },
 ]);
 
-// Changes the nav background on scroll
-function setNavBackGroundOnScroll() {
-    gsap.timeline({
-        scrollTrigger: {
-            trigger: '#main-router-container',
-            start: '50px top',
-            scroller: document.getElementById('main-router-container'),
-            scrub: true
-        }
-    }).to('#nav-container', {
-        background: '#111',
-        duration: 0.5
+// To Open close nav
+function navIconClick() {
+    if (isMobile.value) {
+        isNavVisible.value = !isNavVisible.value;
+    }
+    else {
+        router.push({ name: 'home' })
+    }
+}
+// Close the mobile nav automatically when use clicks on a route
+router.beforeEach(() => {
+    isNavVisible.value = false;
+})
+
+// Mobile nav enter animations
+function beforeNavEnter(el, done) {
+    gsap.set("#nav-container", {
+        x: "-=100%"
+    })
+}
+function navEnter(el, done) {
+    gsap.to("#nav-container", {
+        x: 0,
+        onComplete: done
+    })
+}
+function navLeave(el, done) {
+    gsap.to("#nav-container", {
+        x: '-=100%',
+        onComplete: done
     })
 }
 
@@ -107,7 +136,6 @@ function appLinkMouseLeaveAnimation() {
 }
 
 onMounted(() => {
-    setNavBackGroundOnScroll();
     // Set hover listeners for animations
     $('#app-link').on('mouseenter', appLinkMouseEnterAnimation)
                   .on('mouseleave', appLinkMouseLeaveAnimation)
@@ -115,27 +143,27 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-nav {
-    position: sticky;
-    top: 0;
-    height: 60px;
-    
-    z-index: 100;
-    padding: 0 10px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-#nav-icon {
-    display: none;
-}
-
 %center-align {
     display: flex;
     align-items: center;
+}
+
+#nav-container {
+    position: sticky;
+    top: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 10px;
+    z-index: 100;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 .nav-item {
     @extend %center-align;
@@ -161,25 +189,28 @@ nav {
 }
 
 @media screen and (max-width: 525px) {
-    nav {
-        height: 100%;
-        margin-top: 45px;
-        display: v-bind(displayMobileNav);
+
+    #nav-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        flex-direction: column;
+        transform: translateX(-100%);
+        background: #111;
+        border-radius: 0 10px 10px 10px;
     }
-    #nav-icon {
+    #app-link-icon {
         position: absolute;
         top: 10px;
-        left: 10px;
-        display: block;
-        z-index: 100;
+        right: -40px;
+    }
+    nav {
+        flex-direction: column;
     }
     .nav-item {
-        margin-top: 10px;
-        #app-link-icon {
-            display: none;
-        }
         #app-link {
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
     }
 }

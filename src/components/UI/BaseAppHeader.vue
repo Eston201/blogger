@@ -39,7 +39,7 @@ h1 {
 
 @media screen and (max-width: 450px) {
     h1 {
-        font-size: 5rem;
+        font-size: 4rem;
     }
 }
 </style>

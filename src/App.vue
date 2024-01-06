@@ -86,19 +86,11 @@ function routerLeave(el, done) {
 
 <style lang="scss" scoped>
 #app-container {
-  display: flex;
-  flex-direction: column;
   z-index: 0;
 }
 #main-router-container {
-  flex: 1;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-}
-
-@media screen and (max-width: 525px) {
-  #app-container {
-    flex-direction: row;
-  }
 }
 </style>
