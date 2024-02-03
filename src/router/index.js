@@ -20,7 +20,7 @@ const routes = [
         component: Blogger,
     },
     {
-        path: '/blogger/home',
+        path: '/home',
         name: 'home',
         component: Home,
         meta: {
@@ -28,7 +28,7 @@ const routes = [
         }
     },
     {
-        path: '/blogger/profile',
+        path: '/profile',
         name: 'profile',
         component: Profile,
         meta: {
@@ -41,7 +41,7 @@ const routes = [
         component: Authentication,
     },
     {
-        path: '/blogger/blog/',
+        path: '/blog/',
         children: [
             {
                 path: 'create',

@@ -13,6 +13,15 @@ export default defineConfig({
     vue(),
     vuetify({ autoImport: true }),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+          @import "@/assets/scss/_variables";
+        `
+      }
+    }
+  },
   server: {
     proxy: {
       '/blogger': {

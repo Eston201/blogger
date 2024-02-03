@@ -32,14 +32,30 @@ function initGsap() {
 <style lang="scss" scoped>
 h1 {
     display: flex;
-    font-family: 'Fuzzy Bubbles', sans-serif;
+    font-family: 'Playfair Display', 'sans-serif';
+    font-weight: 500;
     font-size: 7rem;
-    color: #14FFEC;
+    letter-spacing: 10px;
 }
 
 @media screen and (max-width: 450px) {
     h1 {
         font-size: 5rem;
+    }
+}
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 6rem;
+    }
+}
+@media screen and (max-width: 600px) {
+    h1 {
+        font-size: 4rem;
+    }
+}
+@media screen and (max-width: 425px) {
+    h1 {
+        font-size: 4rem;
     }
 }
 </style>

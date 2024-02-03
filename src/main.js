@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 // Style Sheets
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
-import './style.scss'
+import './assets/scss/style.scss'
 
 const vuetify = createVuetify({
     theme: {

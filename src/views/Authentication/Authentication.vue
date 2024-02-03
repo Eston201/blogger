@@ -1,5 +1,5 @@
 <template>
-    <div class="root-template-container" id="authentication">
+    <div class="base-page" id="authentication">
         <div class="left-container">
             <base-app-header/>
             <span>{{message}}</span>
@@ -9,19 +9,21 @@
             <base-form :form-type="authType">
                 <!--Links to change form type. If type login the show signup, vice versa  -->
                 <div class="slot-content" v-if="authType === 'login'">
-                    <span>Create an account ?.</span>
+                    <span>Need an account ?.</span>
                     <base-button-link 
-                    button-text="Sign Up"
-                    button-text-size="1rem"
-                    :click-handler="() => setForm('signup')">
+                        button-text="Sign Up"
+                        button-text-size="1rem"
+                        :dark-theme="false"
+                        :click-handler="() => setForm('signup')">
                     </base-button-link>
                 </div>
 
                 <div class="slot-content" v-else>
-                    <span>Already have an account ?.</span>
+                    <span>Have an account ?.</span>
                     <base-button-link 
                         button-text="Login"
                         button-text-size="1rem"
+                        :dark-theme="false"
                         :click-handler="() => setForm('login')">
                     </base-button-link>
                 </div>
@@ -93,7 +95,6 @@ onMounted(() => {
 
 #authentication {
     @extend %center;
-    padding: 10px;
 }
 .left-container {
     flex-basis: 40%;
@@ -102,7 +103,8 @@ onMounted(() => {
     gap: 10px;
 
     span {
-        font-size: 2rem;
+        font-weight: 400;
+        font-size: 1.5rem;
     }
 }
 .right-container {

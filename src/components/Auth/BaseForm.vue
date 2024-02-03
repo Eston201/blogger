@@ -21,7 +21,6 @@
 
                 <v-text-field
                     class="text-input-field"
-                    color="#14FFEC"
                     v-model="form.username"
                     :rules="formRules.username"
                     validate-on="submit lazy"
@@ -29,12 +28,12 @@
                     autocomplete="username"
                     label="Username"
                     hide-details="auto"
+                    bg-color="#F1F7FA"
                     required>
                 </v-text-field>
 
                 <v-text-field
                     class="text-input-field"
-                    color="#14FFEC"
                     v-model="form.password"
                     :append-inner-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
                     :type="passwordVisible ? 'text' : 'password'"
@@ -44,12 +43,14 @@
                     autocomplete="password"
                     hide-details="auto"
                     required
+                    bg-color="#F1F7FA"
                     @click:append-inner="passwordVisible = !passwordVisible">
                 </v-text-field>
 
                 <v-btn 
                     class="button-submit" 
                     type="submit"
+                    color="#14FFEC"
                     :loading="form.validating"
                     :text="formButtonText"
                 >
@@ -151,9 +152,10 @@ async function validateForm(e) {
     @extend %display-column;
     gap: 20px;
 
-    background-color: #323232;
+    background: $secondary-black;
     border-radius: 5px;
     padding: 15px;
+    color: $off-white;
 }
 
 h2 {
