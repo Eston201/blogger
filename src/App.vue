@@ -1,7 +1,7 @@
 <template>
   <NavBar></NavBar>
   <router-view v-slot="{ Component }">
-    <Transition @enter="routerEnter" @before-enter="beforeRouterEnter" @leave="routerLeave" :css="false" mode="out-in">
+    <Transition @enter="routerEnter" @before-enter="beforeRouterEnter" @leave="routerLeave" mode="out-in">
       <component :is="Component"/>
     </Transition>
   </router-view>
@@ -32,11 +32,11 @@ function beforeRouterEnter(el) {
 }
 function routerEnter(el, done) {
   gsap.to(el, {
-    x: '0',
+    x: 0,
     opacity: 1,
     onComplete: done,
     ease: 'power3.out',
-    duration: 0.8,
+    duration: 0.6,
   });
 }
 function routerLeave(el, done) {
@@ -47,7 +47,7 @@ function routerLeave(el, done) {
     opacity: 0,
     onComplete: done,
     ease: 'power3.in',
-    duration: 0.8
+    duration: 0.6
   });
 }
 </script>
@@ -56,6 +56,5 @@ function routerLeave(el, done) {
 #app {
   display: flex;
   flex-direction: column;
-  background: #F1F7FA;
 }
 </style>

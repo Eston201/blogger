@@ -1,24 +1,25 @@
 <template>
-    <Transition @before-enter="beforeNavEnter" @enter="navEnter" @leave="navLeave" mode="out-in">
-        <nav id="navigation" v-show="navVisible">
-            <span id="app-logo">
-                Blogger
-            </span>
-
-            <div class="nav-items-container">
-                <div v-for="navItem of navRoutes" :key="navItem.label">
-                    {{ navItem.label }}
+    <div id="nav-container">
+        <Transition @before-enter="beforeNavEnter" @enter="navEnter" @leave="navLeave" mode="out-in">
+            <nav id="navigation" v-show="navVisible">
+                <span id="app-logo">
+                    Blogger
+                </span>
+    
+                <div class="nav-items-container">
+                    <div v-for="navItem of navRoutes" :key="navItem.label">
+                        {{ navItem.label }}
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </Transition>
+            </nav>
+        </Transition>
+    </div>
 </template>
 
 <script setup>
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router';
 import gsap from 'gsap';
-import $ from 'jquery'
 
 const route = useRoute();
 const routeName = computed(() => route.name);
@@ -51,12 +52,10 @@ watch(
 );
 
 // Nav Transition animation functions
-// The position and delay alter for nav leave needed so router-view content does not jump into position
 function beforeNavEnter(el) {
     gsap.set(el, {
         opacity: 0,
-        y: "-=100%",
-        position: "fixed"
+        y: "-=100%"
     });
 }
 
@@ -64,42 +63,30 @@ function navEnter(el, done) {
     gsap.to(el, {
         opacity: 1,
         y: 0,
-        onComplete: () => {
-            $("#navigation").css({
-                position: "sticky"
-            })
-            done();
-        },
-        ease: 'power3.out',
-        duration: 0.8
+        onComplete: done,
+        ease: 'power4.out',
     });
 }
 function navLeave(el, done) {
     gsap.to(el, {
-        delay: 0.2,
         opacity: 0,
         y: "-=100%",
-        position: 'fixed',
         onComplete: done,
-        ease: 'power3.in',
-        duration: 0.8
+        ease: 'power4.in',
     })
 }
 </script>
 
 <style lang="scss" scoped>
-#navigation {
-    position: sticky;
-    top: 0;
-    left: 0;
 
+#nav-container {
     width: 100vw;
     height: 60px;
+}
+#navigation {
     background: $secondary-black;
     color: $off-white;
-
     padding: 10px 35px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;

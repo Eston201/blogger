@@ -19,7 +19,9 @@ html, body, #app{
     width: 100vw;
     font-family: 'Roboto', sans-serif;
     overflow: hidden !important;
-    color: #323232;
+
+    background: $off-white;
+    color: $secondary-black;
 }
 
 .base-page {
