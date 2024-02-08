@@ -18,6 +18,7 @@ export default defineConfig({
       scss: {
         additionalData: `
           @import "@/assets/scss/_variables";
+          @import "@/assets/scss/_typography";
         `
       }
     }

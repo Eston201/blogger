@@ -72,7 +72,7 @@ function fadeMessageIn() {
 
 function setForm(authType) {
     const redirect = route.query.redirect
-    router.push({
+    router.replace({
         name: 'auth',
         query: { 
             authType,
