@@ -2,6 +2,7 @@
     <!-- We don't have gsap splitText (paid) plugin so divs will suffice :) -->
     <h1>
         <div v-for="(letter, index) of appName" :key="letter + index" class="app-letter">{{letter}}</div>
+        <div class="dot"></div>
     </h1>
 </template>
 
@@ -32,30 +33,52 @@ function initGsap() {
 <style lang="scss" scoped>
 h1 {
     display: flex;
+    align-items: flex-end;
     font-family: 'Playfair Display', 'sans-serif';
     font-weight: 500;
     font-size: 7rem;
     letter-spacing: 10px;
 }
 
-@media screen and (max-width: 450px) {
-    h1 {
-        font-size: 5rem;
-    }
+.dot {
+    height: 30px;
+    width: 30px;
+    margin-bottom: 30px;
+    margin-left: 5px;
+    border-radius: 50%;
+    background: $primary-teal;
 }
-@media screen and (max-width: 768px) {
-    h1 {
-        font-size: 6rem;
-    }
-}
-@media screen and (max-width: 600px) {
-    h1 {
-        font-size: 4rem;
-    }
-}
-@media screen and (max-width: 425px) {
+
+@include mobile {
     h1 {
         font-size: 4rem;
     }
+
+    .dot {
+        height: 20px;
+        width: 20px;
+        margin-bottom: 10px;
+    }
 }
+
+// @media screen and (max-width: 450px) {
+//     h1 {
+//         font-size: 5rem;
+//     }
+// }
+// @media screen and (max-width: 768px) {
+//     h1 {
+//         font-size: 6rem;
+//     }
+// }
+// @media screen and (max-width: 600px) {
+//     h1 {
+//         font-size: 4rem;
+//     }
+// }
+// @media screen and (max-width: 425px) {
+//     h1 {
+//         font-size: 4rem;
+//     }
+// }
 </style>

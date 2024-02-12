@@ -61,15 +61,9 @@ onMounted(() => {
   font-size: 45px;
 }
 
-@media screen and (min-width: 1024px){
-  .center-container {
-    margin-top: 10%;
-  }
-}
-
 @media screen and (min-width: 425px) {
   .center-container {
-    margin-top: 15%;
+    margin-top: 10%;
   }
 }
 

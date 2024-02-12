@@ -1,6 +1,8 @@
 <template>
     <router-link v-bind="$props">
-        <slot></slot>
+        <div class="router-link-content">
+            <slot></slot>
+        </div>
     </router-link>
 </template>
 
@@ -18,12 +20,20 @@ a {
     color: $off-white;
     font-size: 1.2rem;
     letter-spacing: 2px;
-    padding-inline: 10px;
+    padding-inline: 5px;
 }
 a.router-link-active {
-    background: $off-white;
-    color: $primary-black;
-    transition: all 0.5s ease-out;
-    transform: skewX(-8deg);
+    .router-link-content {
+        padding-inline: 5px;
+        background: $off-white;
+        color: $primary-black;
+        transform: skewX(-8deg);
+    }
+}
+
+@include mobile {
+    a {
+        font-size: 1.5rem;
+    }
 }
 </style>
