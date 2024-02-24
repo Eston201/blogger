@@ -1,8 +1,12 @@
 <template>
-    <button class="base-button-link" :class="{'active-button': active}" @click="clickHandler">{{buttonText}}</button>
+    <button :class="classBindings" @click="clickHandler">
+        {{buttonText}}
+    </button>
 </template>
 
 <script setup>
+import { computed } from 'vue'
+
 const props = defineProps({
     buttonText: {
         type: String,
@@ -20,26 +24,48 @@ const props = defineProps({
     active: { // applies active class styling
         type: Boolean,
         default: false
+    },
+    darkTheme: {
+        type: Boolean,
+        required: false,
+        default: true
     }
+});
+
+const classBindings = computed(() => {
+    return [
+        props.darkTheme ? 'base-button-link-dark' : 'base-button-link-light',
+        props.active ? 'active' : ''
+    ]
 });
 </script>
 
 <style lang="scss" scoped>
-.base-button-link {
+@mixin base-button-link($border-bottom-color, $hover-font-color, $hover-bg-color) {
     font-size: v-bind('props.buttonTextSize');
     background: transparent;
     border: none;
-    color: #0D7377;
-
+    padding: 2px 5px;
+    border-bottom: 2px solid #{$border-bottom-color};
+    
+    transition: all 0.2s ease-out;
     &:hover {
         cursor: pointer;
-        transform: scale(0.96);
-        color: #14FFEC;
+        color: #{$hover-font-color};
+        background: #{$hover-bg-color};
+        transform: skewX(-9deg);
     }
 }
+.base-button-link-dark {
+    @include base-button-link($secondary-black, $off-white, $secondary-black);
+}
+
+.base-button-link-light {
+    @include base-button-link($off-white, $secondary-black, $off-white);
+}
+
 .active-button {
-    color: #EEE;
+    // color: #EEE;
     font-weight: 500;
-    border-bottom: 2px solid #0D7377;
 }
 </style>

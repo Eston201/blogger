@@ -1,11 +1,11 @@
 <template>
-  <div id="blogger" class="root-template-container">
+  <div id="blogger" class="base-page">
     <main class="center-container">
       <base-app-header/>
 
       <div class="button-container">
         <base-button-link 
-          button-text="Log In" 
+          button-text="Log In"
           :click-handler="() => goToAuth('login')"
         /> 
         |
@@ -45,24 +45,31 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-#blogger {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  letter-spacing: 1px;
-}
-
 .center-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 25px;
+
 }
 
 .button-container {
+  height: 100%;
   display: flex;
   align-items: center;
   gap: 10px;
+  font-size: 45px;
+}
+
+@media screen and (min-width: 425px) {
+  .center-container {
+    margin-top: 10%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .center-container {
+    margin-top: 40%;
+  }
 }
 </style>

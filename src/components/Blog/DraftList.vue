@@ -1,6 +1,6 @@
 <template>
     <div class="base-page">
-        Not found
+        Draft List
     </div>
 </template>
 
