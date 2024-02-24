@@ -21,6 +21,10 @@ a {
     font-size: 1.2rem;
     letter-spacing: 2px;
     padding-inline: 5px;
+
+    &:hover {
+        color: $primary-teal;
+    }
 }
 a.router-link-active {
     .router-link-content {
