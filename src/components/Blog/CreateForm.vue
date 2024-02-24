@@ -1,11 +1,12 @@
 <template>
-    <div class="root-template-container">
+    <div class="base-page">
         <form id="blogCreateForm">
             <section class="form-top-container">
                 <div class="title-input-container">
-                    <input 
+                    <input
                         type="text" 
-                        class="title-input" 
+                        class="title-input"
+                        autofocus
                         v-model.trim="form.title"
                         placeholder="Blog Title"
                         autocomplete="false"
@@ -208,6 +209,7 @@ async function publish() {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    color: #121212;
 }
 .form-top-container {
     display: flex;
@@ -215,20 +217,21 @@ async function publish() {
     justify-content: space-between;
     .title-input-container {
         width: 45%;
-        
         display: flex;
         align-items: center;
         gap: 5px;
         
         font-size: 2.25rem;
         padding-bottom: 5px;
-        border-bottom: 4px solid #14FFEC;
+        border-bottom: 4px solid #0D7377;
         .title-input {
+            color: #323232;
             width: 95%;
             letter-spacing: 1px;
             outline: none;
         }
         .title-clear-icon {
+            color: #F1f7FA;
             font-size: 30px;
             background-color: #323232;
             border-radius: 3px;

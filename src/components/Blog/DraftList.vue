@@ -1,5 +1,5 @@
 <template>
-    <div class="root-template-container">
+    <div class="base-page">
         Draft List
     </div>
 </template>

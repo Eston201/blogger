@@ -1,17 +1,13 @@
 <template>
-    <div class="root-template-container" id="create">
+    <div class="base-page" id="create">
         <div id="component-switcher">
-            <v-btn 
-                elevation="4"
-                variant="outlined"
+            <v-btn
                 :color="activeCompBtnColor('CreateFrom')" 
                 @click="changeComp('CreateFrom')"
             >
                 Create
             </v-btn>
             <v-btn 
-                elevation="4"
-                variant="outlined"
                 :color="activeCompBtnColor('DraftList')" 
                 @click="changeComp('DraftList')"
             >
@@ -41,10 +37,9 @@ function changeComp(comp) {
     activeComp.value = comp;
 }
 function activeCompBtnColor(comp) {
-    if (activeComp.value === comp) return '#14FFEC';
+    if (activeComp.value === comp) return '#323232';
     return "#FFF";
 }
-
 </script>
 
 <style lang="scss" scoped>
